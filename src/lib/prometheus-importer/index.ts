@@ -64,6 +64,7 @@ export const PrometheusImporter = (
    * Execute's strategy description here.
    */
   const execute = async (inputs: PluginParams[]): Promise<PluginParams[]> => {
+    console.log('---- prometheus-importer -- execute -- starting.');
     if (inputs && inputs[0]) {
       return inputs;
     }
@@ -72,6 +73,7 @@ export const PrometheusImporter = (
     validateEnvProperties();
     const queryExecutor = RangeQueryExecutor();
     const dataTransformer = ParseAndEnrichDataTransformer();
+    console.log('---- prometheus-importer -- execute: getting metrics.');
     const rawResponse = queryExecutor.getMetricsFor(
       globalConfig.query,
       globalConfig.step,
@@ -80,6 +82,7 @@ export const PrometheusImporter = (
       getEnvVariable('HOST'),
       process.env
     );
+    console.log('---- prometheus-importer -- execute: good path.');
     return dataTransformer.parseMetrics(
       rawResponse,
       globalConfig.metricLabels,
