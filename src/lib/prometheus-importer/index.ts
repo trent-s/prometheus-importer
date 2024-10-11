@@ -78,10 +78,10 @@ export const PrometheusImporter = (
     const dataTransformer = ParseAndEnrichDataTransformer();
     console.log('---- prometheus-importer -- execute: getting metrics.');
     fs.appendFileSync(logFile, 'query status.');
-    fs.appendFileSync(logfile, '  query:' + globalConfig.query + '.');
-    fs.appendFileSync(logfile, '  step:' + globalConfig.step + '.');
-    fs.appendFileSync(logfile, '  start:' + globalConfig.start + '.');
-    fs.appendFileSync(logfile, '  HOST:' + getEnvVariable('HOST'));
+    fs.appendFileSync(logFile, '  query:' + globalConfig.query + '.');
+    fs.appendFileSync(logFile, '  step:' + globalConfig.step + '.');
+    fs.appendFileSync(logFile, '  start:' + globalConfig.start + '.');
+    fs.appendFileSync(logFile, '  HOST:' + getEnvVariable('HOST'));
     const rawResponse = queryExecutor.getMetricsFor(
       globalConfig.query,
       globalConfig.step,
