@@ -1,4 +1,4 @@
-import {ERRORS} from '@grnsft/if-core/util';
+import {ERRORS} from '@grnsft/if-core/utils';
 import {QueryExecutor} from '../interfaces';
 import fetch from 'node-fetch-commonjs';
 import {AuthCredentials} from '../types';
@@ -30,7 +30,7 @@ export const RangeQueryExecutor = (): QueryExecutor => {
       step: step,
     };
 
-    console.log('In RangeQueryExecutor.');  
+    console.log('In RangeQueryExecutor.');
     console.log('requestbody= ' + requestbody);
     console.log('authHeaders= ' + authHeaders);
     console.log('connectionUrl= ' + connectionUrl);
@@ -43,7 +43,7 @@ export const RangeQueryExecutor = (): QueryExecutor => {
     if (response.ok) {
       const jsonResponse = (await response.json()) as Record<string, any>;
       if (jsonResponse.status !== 'success') {
-         console.log('error1');
+        console.log('error1');
         throw new APIRequestError(
           `Error while fetching metrics from url ${connectionUrl}`
         );

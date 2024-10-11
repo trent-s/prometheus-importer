@@ -1,5 +1,5 @@
 import {PluginParams, ExecutePlugin} from '@grnsft/if-core/types';
-import {ERRORS} from '@grnsft/if-core/util';
+import {ERRORS} from '@grnsft/if-core/utils';
 import {z, ZodSchema} from 'zod';
 import * as dotenv from 'dotenv';
 
@@ -7,8 +7,7 @@ import {ConfigParams, Env} from './types';
 import {RangeQueryExecutor} from './helpers/range-query-executor';
 import {ParseAndEnrichDataTransformer} from './helpers/data-transformer';
 
-const {ConfigError} = ERRORS;
-const {InputValidationError} = ERRORS;
+const {ConfigError, InputValidationError} = ERRORS;
 
 export const PrometheusImporter = (
   globalConfig: ConfigParams
