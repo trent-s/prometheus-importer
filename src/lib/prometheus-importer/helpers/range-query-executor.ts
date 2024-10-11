@@ -1,7 +1,10 @@
+import {ERRORS} from '@grnsft/if-core/util';
 import {QueryExecutor} from '../interfaces';
 import fetch from 'node-fetch-commonjs';
 import {AuthCredentials} from '../types';
 import {AuthenticationProvider} from './auth-provider';
+
+const {APIRequestError} = ERRORS;
 
 export const RangeQueryExecutor = (): QueryExecutor => {
   const getMetricsFor = async (
@@ -41,7 +44,7 @@ export const RangeQueryExecutor = (): QueryExecutor => {
       const jsonResponse = (await response.json()) as Record<string, any>;
       if (jsonResponse.status !== 'success') {
          console.log('error1');
-        throw new Error(
+        throw new APIRequestError(
           `Error while fetching metrics from url ${connectionUrl}`
         );
       }
@@ -49,8 +52,8 @@ export const RangeQueryExecutor = (): QueryExecutor => {
       return jsonResponse;
     } else {
       console.log('error1');
-      throw new Error(
-        `Error while fetching m,etrics from url ${connectionUrl}`
+      throw new APIRequestError(
+        `Error while fetching metrics from url ${connectionUrl}`
       );
     }
   };

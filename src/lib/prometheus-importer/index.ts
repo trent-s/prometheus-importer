@@ -1,10 +1,14 @@
 import {PluginParams, ExecutePlugin} from '@grnsft/if-core/types';
+import {ERRORS} from '@grnsft/if-core/util';
 import {z, ZodSchema} from 'zod';
 import * as dotenv from 'dotenv';
 
 import {ConfigParams, Env} from './types';
 import {RangeQueryExecutor} from './helpers/range-query-executor';
 import {ParseAndEnrichDataTransformer} from './helpers/data-transformer';
+
+const {ConfigError} = ERRORS;
+const {InputValidationError} = ERRORS;
 
 export const PrometheusImporter = (
   globalConfig: ConfigParams
@@ -34,7 +38,7 @@ export const PrometheusImporter = (
     const validationResult = schema.safeParse(object);
 
     if (!validationResult.success) {
-      throw new Error(validationResult.error.message);
+      throw new InputValidationError(validationResult.error.message);
     }
 
     return validationResult.data;
@@ -45,7 +49,7 @@ export const PrometheusImporter = (
    */
   const validateEnvProperties = () => {
     if (getEnvVariable('HOST') === '') {
-      throw new Error('Environment variable HOST is not defined');
+      throw new ConfigError('Environment variable HOST is not defined');
     }
   };
 
