@@ -8,7 +8,7 @@ import {RangeQueryExecutor} from './helpers/range-query-executor';
 import {ParseAndEnrichDataTransformer} from './helpers/data-transformer';
 
 const {ConfigError, InputValidationError} = ERRORS;
-
+const logFile = '/work/pi-log.txt';
 import fs = require('fs');
 
 export const PrometheusImporter = (
@@ -66,7 +66,7 @@ export const PrometheusImporter = (
    * Execute's strategy description here.
    */
   const execute = async (inputs: PluginParams[]): Promise<PluginParams[]> => {
-    fs.appendFileSync('prom-import.txt', 'entering execute.');
+    fs.appendFileSync(logFile, 'entering execute.');
     console.log('---- prometheus-importer -- execute -- starting.');
     if (inputs && inputs[0]) {
       return inputs;
@@ -77,11 +77,11 @@ export const PrometheusImporter = (
     const queryExecutor = RangeQueryExecutor();
     const dataTransformer = ParseAndEnrichDataTransformer();
     console.log('---- prometheus-importer -- execute: getting metrics.');
-    fs.appendFileSync('prom-import.txt', 'query status.');
-    fs.appendFileSync('prom-import.txt', '  query:' + globalConfig.query + '.');
-    fs.appendFileSync('prom-import.txt', '  step:' + globalConfig.step + '.');
-    fs.appendFileSync('prom-import.txt', '  start:' + globalConfig.start + '.');
-    fs.appendFileSync('prom-import.txt', '  HOST:' + getEnvVariable('HOST'));
+    fs.appendFileSync(logFile, 'query status.');
+    fs.appendFileSync(logfile, '  query:' + globalConfig.query + '.');
+    fs.appendFileSync(logfile, '  step:' + globalConfig.step + '.');
+    fs.appendFileSync(logfile, '  start:' + globalConfig.start + '.');
+    fs.appendFileSync(logfile, '  HOST:' + getEnvVariable('HOST'));
     const rawResponse = queryExecutor.getMetricsFor(
       globalConfig.query,
       globalConfig.step,

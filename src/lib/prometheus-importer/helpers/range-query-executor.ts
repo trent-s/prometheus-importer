@@ -5,6 +5,7 @@ import {AuthCredentials} from '../types';
 import {AuthenticationProvider} from './auth-provider';
 
 const {APIRequestError} = ERRORS;
+const logFile = '/work/pi-log.txt';
 
 import fs = require('fs');
 
@@ -37,10 +38,10 @@ export const RangeQueryExecutor = (): QueryExecutor => {
     console.log('    authHeaders= ' + authHeaders);
     console.log('    connectionUrl= ' + connectionUrl);
 
-    fs.appendFileSync('prom-import.txt', 'In RangeQueryExecutor.');
-    fs.appendFileSync('prom-import.txt', '  requestbody:' + requestbody + '.');
-    fs.appendFileSync('prom-import.txt', '  authHeaders:' + authHeaders + '.');
-    fs.appendFileSync('prom-import.txt', '  connectionUrl:' + connectionUrl);
+    fs.appendFileSync(logFile, 'In RangeQueryExecutor.');
+    fs.appendFileSync(logFile, '  requestbody:' + requestbody + '.');
+    fs.appendFileSync(logFile, '  authHeaders:' + authHeaders + '.');
+    fs.appendFileSync(logFile, '  connectionUrl:' + connectionUrl);
 
     const response = await fetch(connectionUrl, {
       method: 'POST',
@@ -51,17 +52,17 @@ export const RangeQueryExecutor = (): QueryExecutor => {
       const jsonResponse = (await response.json()) as Record<string, any>;
       if (jsonResponse.status !== 'success') {
         console.log('Error fetching metrics. Status not success.');
-        fs.appendFileSync('prom-import.txt', 'Status not success.');
+        fs.appendFileSync(logFile, 'Status not success.');
         throw new APIRequestError(
           `Error while fetching metrics from url ${connectionUrl}. Status not success.`
         );
       }
       console.log('validresponse=' + jsonResponse);
-      fs.appendFileSync('prom-import.txt', 'validresponse=' + jsonResponse);
+      fs.appendFileSync(logFile, 'validresponse=' + jsonResponse);
       return jsonResponse;
     } else {
       console.log('Error fetching metrics. Response not OK.');
-      fs.appendFileSync('prom-import.txt', 'Error fetching, response not ok.');
+      fs.appendFileSync(logFile, 'Error fetching, response not ok.');
       throw new APIRequestError(
         `Error while fetching metrics from url ${connectionUrl}. Response not ok.`
       );
