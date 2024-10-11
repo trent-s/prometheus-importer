@@ -1,5 +1,5 @@
+import {ERRORS} from '../../util/errors';
 import {PluginParams, ExecutePlugin} from '@grnsft/if-core/types';
-import {ERRORS} from '@grnsft/if-core/utils';
 import {z, ZodSchema} from 'zod';
 import * as dotenv from 'dotenv';
 
