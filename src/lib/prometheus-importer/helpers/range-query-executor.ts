@@ -27,6 +27,11 @@ export const RangeQueryExecutor = (): QueryExecutor => {
       step: step,
     };
 
+    console.log('In RangeQueryExecutor.');  
+    console.log('requestbody= ' + requestbody);
+    console.log('authHeaders= ' + authHeaders);
+    console.log('connectionUrl= ' + connectionUrl);
+
     const response = await fetch(connectionUrl, {
       method: 'POST',
       headers: {...contentHeaders, ...authHeaders},
@@ -35,12 +40,15 @@ export const RangeQueryExecutor = (): QueryExecutor => {
     if (response.ok) {
       const jsonResponse = (await response.json()) as Record<string, any>;
       if (jsonResponse.status !== 'success') {
+         console.log('error1');
         throw new Error(
           `Error while fetching metrics from url ${connectionUrl}`
         );
       }
+      console.log('validresponse=' + jsonResponse);
       return jsonResponse;
     } else {
+      console.log('error1');
       throw new Error(
         `Error while fetching m,etrics from url ${connectionUrl}`
       );
