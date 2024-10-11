@@ -9,7 +9,7 @@ import {ParseAndEnrichDataTransformer} from './helpers/data-transformer';
 
 const {ConfigError, InputValidationError} = ERRORS;
 
-const fs = require('fs');
+import fs = require('fs');
 
 export const PrometheusImporter = (
   globalConfig: ConfigParams

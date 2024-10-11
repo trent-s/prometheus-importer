@@ -6,6 +6,8 @@ import {AuthenticationProvider} from './auth-provider';
 
 const {APIRequestError} = ERRORS;
 
+import fs = require('fs');
+
 export const RangeQueryExecutor = (): QueryExecutor => {
   const getMetricsFor = async (
     query: string,
