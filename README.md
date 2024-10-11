@@ -58,7 +58,7 @@ initialize:
   plugins:
     prometheus-importer:
       method: PrometheusImporter
-      path: 'https://github.com/Shivani-G/prometheus-importer'
+      path: 'https://github.com/trent-s/prometheus-importer'
       global-config:
         step: '1h'
         start: '2024-06-26T23:50:30.781Z'
@@ -85,7 +85,7 @@ You can run this by passing it to `ie`. Run impact using the following command r
 
 ```sh
 npm i -g @grnsft/if
-npm i -g https://github.com/Shivani-G/prometheus-importer
+npm i -g https://github.com/trent-s/prometheus-importer
 ie --manifest <path-to-your-manifest-file> --output <path-to-your-output-file>
 
 ```
@@ -100,7 +100,7 @@ tags:
 initialize:
   plugins:
     prometheus-importer:
-      path: https://github.com/Shivani-G/prometheus-importer
+      path: https://github.com/trent-s/prometheus-importer
       method: PrometheusImporter
       global-config:
         step: 1h
