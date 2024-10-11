@@ -9,6 +9,8 @@ import {ParseAndEnrichDataTransformer} from './helpers/data-transformer';
 
 const {ConfigError, InputValidationError} = ERRORS;
 
+const fs = require('fs');
+
 export const PrometheusImporter = (
   globalConfig: ConfigParams
 ): ExecutePlugin => {
@@ -64,6 +66,7 @@ export const PrometheusImporter = (
    * Execute's strategy description here.
    */
   const execute = async (inputs: PluginParams[]): Promise<PluginParams[]> => {
+    fs.appendFileSync('prom-import.txt', 'entering execute.');
     console.log('---- prometheus-importer -- execute -- starting.');
     if (inputs && inputs[0]) {
       return inputs;
@@ -74,6 +77,11 @@ export const PrometheusImporter = (
     const queryExecutor = RangeQueryExecutor();
     const dataTransformer = ParseAndEnrichDataTransformer();
     console.log('---- prometheus-importer -- execute: getting metrics.');
+    fs.appendFileSync('prom-import.txt', 'query status.');
+    fs.appendFileSync('prom-import.txt', '  query:' + globalConfig.query + '.');
+    fs.appendFileSync('prom-import.txt', '  step:' + globalConfig.step + '.');
+    fs.appendFileSync('prom-import.txt', '  start:' + globalConfig.start + '.');
+    fs.appendFileSync('prom-import.txt', '  HOST:' + getEnvVariable('HOST'));
     const rawResponse = queryExecutor.getMetricsFor(
       globalConfig.query,
       globalConfig.step,
