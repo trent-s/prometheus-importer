@@ -1,7 +1,7 @@
 {
   "name": "prometheus-importer",
   "description": "IF plugin to import prometheus metrics",
-  "version": "v0.2.0",
+  "version": "v0.2.1",
   "author": {
     "name": "Green Software Foundation",
     "email": "info@gsf.com"
