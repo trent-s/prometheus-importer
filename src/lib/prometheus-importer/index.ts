@@ -66,7 +66,7 @@ export const PrometheusImporter = (
    * Execute's strategy description here.
    */
   const execute = async (inputs: PluginParams[]): Promise<PluginParams[]> => {
-    fs.appendFileSync(logFile, 'entering execute.');
+    fs.appendFileSync(logFile, 'Entering execute.');
     console.log('---- prometheus-importer -- execute -- starting.');
     if (inputs && inputs[0]) {
       return inputs;
