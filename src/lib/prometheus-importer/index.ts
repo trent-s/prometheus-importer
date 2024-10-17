@@ -11,9 +11,7 @@ const {ConfigError, InputValidationError} = ERRORS;
 const logFile = '/work/pi-log.txt';
 import fs = require('fs');
 
-export const PrometheusImporter = (
-  config: ConfigParams
-): ExecutePlugin => {
+export const PrometheusImporter = (config: ConfigParams): ExecutePlugin => {
   const metadata = {
     kind: 'execute',
   };

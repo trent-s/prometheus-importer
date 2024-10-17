@@ -1,7 +1,7 @@
 {
   "name": "prometheus-importer",
   "description": "IF plugin to import prometheus metrics",
-  "version": "v0.2.1",
+  "version": "0.2.2",
   "author": {
     "name": "Green Software Foundation",
     "email": "info@gsf.com"
@@ -48,6 +48,7 @@
     "fix:package": "fixpack",
     "lint": "gts lint",
     "prepare": "husky install",
+    "bumpver": "npm version patch --force && npm publish",
     "prepublish": "npm run build",
     "test": "jest --verbose"
   }
