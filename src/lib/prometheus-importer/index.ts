@@ -12,16 +12,16 @@ const logFile = '/work/pi-log.txt';
 import fs = require('fs');
 
 export const PrometheusImporter = (
-  globalConfig: ConfigParams
+  config: ConfigParams
 ): ExecutePlugin => {
   const metadata = {
     kind: 'execute',
   };
 
   /**
-   * Validates global config.
+   * Validates config.
    */
-  const validateGlobalConfig = () => {
+  const validateConfig = () => {
     const schema = z.object({
       query: z.string(),
       start: z.string(),
@@ -32,7 +32,7 @@ export const PrometheusImporter = (
       defaultLabels: z.record(z.any()),
     });
 
-    return validate<z.infer<typeof schema>>(schema, globalConfig);
+    return validate<z.infer<typeof schema>>(schema, config);
   };
 
   const validate = <T>(schema: ZodSchema<T>, object: any) => {
@@ -71,31 +71,31 @@ export const PrometheusImporter = (
     if (inputs && inputs[0]) {
       return inputs;
     }
-    validateGlobalConfig();
+    validateConfig();
     dotenv.config();
     validateEnvProperties();
     const queryExecutor = RangeQueryExecutor();
     const dataTransformer = ParseAndEnrichDataTransformer();
     console.log('---- prometheus-importer -- execute: getting metrics.');
     fs.appendFileSync(logFile, 'query status.');
-    fs.appendFileSync(logFile, '  query:' + globalConfig.query + '.');
-    fs.appendFileSync(logFile, '  step:' + globalConfig.step + '.');
-    fs.appendFileSync(logFile, '  start:' + globalConfig.start + '.');
+    fs.appendFileSync(logFile, '  query:' + config.query + '.');
+    fs.appendFileSync(logFile, '  step:' + config.step + '.');
+    fs.appendFileSync(logFile, '  start:' + config.start + '.');
     fs.appendFileSync(logFile, '  HOST:' + getEnvVariable('HOST'));
     const rawResponse = queryExecutor.getMetricsFor(
-      globalConfig.query,
-      globalConfig.step,
-      globalConfig.start,
-      globalConfig.end,
+      config.query,
+      config.step,
+      config.start,
+      config.end,
       getEnvVariable('HOST'),
       process.env
     );
     console.log('---- prometheus-importer -- execute: good path.');
     return dataTransformer.parseMetrics(
       rawResponse,
-      globalConfig.metricLabels,
-      globalConfig.metricName,
-      globalConfig.defaultLabels
+      config.metricLabels,
+      config.metricName,
+      config.defaultLabels
     );
   };
 
