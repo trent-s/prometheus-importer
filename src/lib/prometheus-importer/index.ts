@@ -1,4 +1,5 @@
 import {ERRORS} from '../../util/errors';
+import {debugLog} from '../../util/debug-log';
 import {PluginParams, ExecutePlugin} from '@grnsft/if-core/types';
 import {z, ZodSchema} from 'zod';
 import * as dotenv from 'dotenv';
@@ -8,8 +9,6 @@ import {RangeQueryExecutor} from './helpers/range-query-executor';
 import {ParseAndEnrichDataTransformer} from './helpers/data-transformer';
 
 const {ConfigError, InputValidationError} = ERRORS;
-const logFile = '/work/pi-log.txt';
-import fs = require('fs');
 
 export const PrometheusImporter = (config: ConfigParams): ExecutePlugin => {
   const metadata = {
@@ -64,7 +63,7 @@ export const PrometheusImporter = (config: ConfigParams): ExecutePlugin => {
    * Execute's strategy description here.
    */
   const execute = async (inputs: PluginParams[]): Promise<PluginParams[]> => {
-    fs.appendFileSync(logFile, 'Entering execute.');
+    debugLog('Entering execute.');
     console.log('---- prometheus-importer -- execute -- starting.');
     if (inputs && inputs[0]) {
       return inputs;
@@ -75,11 +74,11 @@ export const PrometheusImporter = (config: ConfigParams): ExecutePlugin => {
     const queryExecutor = RangeQueryExecutor();
     const dataTransformer = ParseAndEnrichDataTransformer();
     console.log('---- prometheus-importer -- execute: getting metrics.');
-    fs.appendFileSync(logFile, 'query status.');
-    fs.appendFileSync(logFile, '  query:' + config.query + '.');
-    fs.appendFileSync(logFile, '  step:' + config.step + '.');
-    fs.appendFileSync(logFile, '  start:' + config.start + '.');
-    fs.appendFileSync(logFile, '  HOST:' + getEnvVariable('HOST'));
+    debugLog('query status.');
+    debugLog('  query:' + config.query + '.');
+    debugLog('  step:' + config.step + '.');
+    debugLog('  start:' + config.start + '.');
+    debugLog('  HOST:' + getEnvVariable('HOST'));
     const rawResponse = queryExecutor.getMetricsFor(
       config.query,
       config.step,
