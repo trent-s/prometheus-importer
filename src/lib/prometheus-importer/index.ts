@@ -27,7 +27,7 @@ export const PrometheusImporter = (config: ConfigParams): ExecutePlugin => {
       step: z.string(),
       metricLabels: z.array(z.string()),
       metricName: z.string(),
-      defaultLabels: z.record(z.any()),
+      defaultLabels: z.record(z.string(), z.any()),
     });
 
     return validate<z.infer<typeof schema>>(schema, config);
